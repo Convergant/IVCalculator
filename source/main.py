@@ -1,3 +1,6 @@
+# This is a program designed to provide a user interface that calculates the IVs of a Pokemon,
+# as well as providing how many different kinds of experience candy are required to do so, if desired.
+
 from imports import *
 from EXPCalculator import *
 from data import *
@@ -236,6 +239,14 @@ def display_ui():
 
     excess_xp = []
     exp_group = exp_groups_data.get(pokemon.get().split("-")[0])
+
+    def clear_iv_calculator(*args):
+        print("resetting calculator")
+        for i in range(len(old_ranges)):
+            old_ranges[i] = [0, 31]
+
+    pokemon.bind("<<ComboboxSelected>>", clear_iv_calculator)
+    clicked.trace("w", clear_iv_calculator)
 
     def display_candies(displaying=True):
         """ Display the number of each type of candy.
